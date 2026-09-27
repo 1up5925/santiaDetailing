@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>santiaDetailing — Lavage auto & Detailing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070a;
+    --surface: #10141b;
+    --surface-2: #161b24;
+    --line: #232a36;
+    --blue: #2e7ce0;
+    --blue-bright: #5aa6ff;
+    --white: #f2f5f9;
+    --grey: #8b94a3;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background-image:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(46,124,224,0.20), transparent 60%),
+      radial-gradient(ellipse 700px 400px at 90% 30%, rgba(46,124,224,0.08), transparent 60%);
+  }
+  h1, h2, h3, .display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+
+  .hero { padding: 56px 20px 40px; text-align: center; }
+  .badge-ring {
+    width: 168px; height: 168px; border-radius: 50%; margin: 0 auto 28px;
+    overflow: hidden; border: 3px solid var(--blue);
+    box-shadow: 0 0 0 6px rgba(46,124,224,0.10), 0 0 40px rgba(46,124,224,0.35);
+    animation: ring-in 900ms cubic-bezier(.2,.8,.2,1);
+    background:
+      radial-gradient(ellipse 90px 40px at 50% 18%, rgba(255,255,255,0.06), transparent 70%),
+      radial-gradient(circle at 50% 50%, #171d27 0%, #0a0d13 70%, #05070a 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  @keyframes ring-in {
+    from { transform: scale(0.7); opacity: 0; box-shadow: 0 0 0 0 rgba(46,124,224,0); }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  .badge-inner {
+    width: 80%; height: 80%; border-radius: 50%;
+    border: 1px solid rgba(90,166,255,0.35);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .badge-mono {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 44px;
+    letter-spacing: -0.03em; line-height: 1; color: var(--blue-bright);
+    text-shadow: 0 0 18px rgba(90,166,255,0.55);
+  }
+  .badge-line { width: 32px; height: 2px; background: var(--blue); margin-top: 9px; border-radius: 2px; opacity: 0.9; }
+
+  .hero h1 { font-size: clamp(28px, 5.5vw, 42px); font-weight: 700; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .hero h1 .accent { color: var(--blue-bright); }
+  .hero .sub {
+    color: var(--grey); font-size: 13px; letter-spacing: 0.14em; margin: 0 0 22px;
+    text-transform: uppercase;
+  }
+  .hero p.tagline {
+    max-width: 440px; margin: 0 auto; color: #cfd6e0; font-size: 16px; line-height: 1.5;
+  }
+
+  .info-strip {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 12px;
+    padding: 22px 20px 8px; font-size: 14px; color: #cfd6e0;
+  }
+  .info-strip span, .info-strip a {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .info-strip a {
+    text-decoration: none; color: #cfd6e0; font: inherit;
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 16px; transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+  }
+  .info-strip a:hover { border-color: var(--blue); color: var(--white); background: rgba(46,124,224,0.08); }
+  .info-strip span { padding: 8px 4px; }
+  .info-strip svg { flex: none; }
+
+  .offers-section { padding: 36px 20px 20px; }
+  .offers-section h2 { font-size: 22px; text-align: center; margin: 0 0 4px; }
+  .offers-section .lede { text-align: center; color: var(--grey); font-size: 14px; margin: 0 0 28px; }
+
+  .offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 760px) { .offers { grid-template-columns: 1fr; } }
+
+  .offer {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 20px;
+    display: flex; flex-direction: column;
+    transition: border-color 220ms ease, transform 180ms ease, background 220ms ease;
+  }
+  .offer.complete { grid-column: span 3; }
+  @media (max-width: 760px) { .offer.complete { grid-column: span 1; } }
+
+  .offer.selected { border-color: var(--blue); background: #121a26; }
+  .offer:hover { transform: translateY(-2px); }
+
+  .offer-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .offer-name { font-size: 17px; font-weight: 600; line-height: 1.25; }
+  .offer-price { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--blue-bright); white-space: nowrap; }
+  .offer-time { color: var(--grey); font-size: 12.5px; margin: 2px 0 14px; display: flex; align-items: center; gap: 6px; }
+
+  .offer ul { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .offer.complete ul { columns: 2; column-gap: 24px; }
+  .offer li { font-size: 13.5px; color: #cfd6e0; display: flex; gap: 8px; break-inside: avoid; }
+  .offer li svg { flex: none; margin-top: 2px; color: var(--blue); }
+
+  .choose-btn {
+    margin-top: auto; width: 100%; padding: 12px 16px; border-radius: 9px;
+    background: transparent; border: 1px solid var(--blue); color: var(--blue-bright);
+    font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: background 180ms ease, color 180ms ease;
+  }
+  .choose-btn:hover { background: var(--blue); color: #06090d; }
+  .offer.selected .choose-btn { background: var(--blue); color: #06090d; }
+
+  .send-panel {
+    max-width: 880px; margin: 28px auto 0; padding: 0 20px;
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 420ms ease, opacity 320ms ease, margin 420ms ease;
+  }
+  .send-panel.open { max-height: 560px; opacity: 1; }
+
+  .send-card {
+    background: var(--surface-2); border: 1px solid var(--blue); border-radius: 14px;
+    padding: 22px 22px 24px;
+  }
+  .send-card h3 { margin: 0 0 4px; font-size: 16px; }
+  .send-card .picked { color: var(--blue-bright); font-weight: 600; }
+  .send-card p.hint { color: var(--grey); font-size: 13px; margin: 4px 0 14px; }
+
+  .msg-box {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; font-size: 14px; color: #dbe1ea; line-height: 1.5; margin-bottom: 16px;
+  }
+
+  .send-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .send-actions a, .send-actions button {
+    flex: 1 1 200px; text-decoration: none; text-align: center;
+    padding: 12px 16px; border-radius: 9px; font: inherit; font-size: 14px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; border: 1px solid var(--line); background: var(--surface);
+    color: var(--white); transition: border-color 180ms ease, transform 150ms ease;
+  }
+  .send-actions a:hover, .send-actions button:hover { border-color: var(--blue); transform: translateY(-1px); }
+  .send-actions .primary { background: var(--blue); border-color: var(--blue); color: #06090d; }
+  .send-actions .primary:hover { background: var(--blue-bright); border-color: var(--blue-bright); }
+
+  .copied-note { font-size: 12.5px; color: var(--blue-bright); margin-top: 10px; min-height: 16px; }
+
+  footer { text-align: center; padding: 48px 20px 40px; color: var(--grey); font-size: 13px; }
+  footer .brand { color: var(--white); font-family: 'Space Grotesk', sans-serif; font-weight: 600; margin-bottom: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  :focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge-ring">
+    <div class="badge-inner">
+      <span class="badge-mono">SD</span>
+      <span class="badge-line"></span>
+    </div>
+  </div>
+  <h1>santia<span class="accent">Detailing</span></h1>
+  <p class="sub">Lavage auto &amp; Detailing</p>
+  <p class="tagline">Une voiture propre, c'est toujours mieux. Choisissez une formule ci-dessous : votre demande part directement vers santiaDetailing.</p>
+</div>
+
+<div class="info-strip">
+  <a href="https://wa.me/33611394496" target="_top" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.35 1.79.68 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.27a2 2 0 0 1 2.11-.45c.86.33 1.75.56 2.65.68A2 2 0 0 1 22 16.92z"/></svg> +33 6 11 39 44 96</a>
+  <a href="https://www.instagram.com/santiadetailing?stkn=MWZ4anl5emdkY2VpYw%3D%3D&amp;utm_source=qr" target="_top" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg> @santiadetailing</a>
+  <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Toul &amp; environs (Nancy et alentours)</span>
+</div>
+
+<div class="wrap offers-section">
+  <h2>Les formules</h2>
+  <p class="lede">Sélectionnez une formule pour préparer votre message</p>
+
+  <div class="offers" id="offers">
+
+    <div class="offer" data-id="ext" data-name="Formule Extérieur" data-price="25">
+      <div class="offer-top">
+        <div class="offer-name">Formule<br>Extérieur</div>
+        <div class="offer-price">25&nbsp;€</div>
+      </div>
+      <div class="offer-time">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Environ 45 min
+      </div>
+      <ul>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Prélavage de la carrosserie</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Lavage manuel</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des jantes</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Rinçage</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Séchage</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des vitres extérieures</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Finition carrosserie</li>
+      </ul>
+      <button class="choose-btn">Choisir cette formule</button>
+    </div>
+
+    <div class="offer" data-id="int" data-name="Formule Intérieur" data-price="30">
+      <div class="offer-top">
+        <div class="offer-name">Formule<br>Intérieur</div>
+        <div class="offer-price">30&nbsp;€</div>
+      </div>
+      <div class="offer-time">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Environ 1h
+      </div>
+      <ul>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Aspiration complète de l'habitacle</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage du tableau de bord</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des plastiques</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des tapis et moquettes</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des vitres intérieures/extérieures</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Désodorisation</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage du coffre</li>
+      </ul>
+      <button class="choose-btn">Choisir cette formule</button>
+    </div>
+
+    <div class="offer complete" data-id="full" data-name="Formule Intérieur + Extérieur" data-price="50">
+      <div class="offer-top">
+        <div>
+          <div class="offer-name">Formule Intérieur + Extérieur</div>
+        </div>
+        <div class="offer-price">50&nbsp;€</div>
+      </div>
+      <div class="offer-time">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Environ 1h30 – 2h · La formule complète
+      </div>
+      <ul>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Prélavage + lavage manuel</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des jantes</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Rinçage + séchage</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des vitres intérieur/extérieur</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Aspiration complète</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage du tableau de bord et des plastiques</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage des tapis et moquettes</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Nettoyage du coffre</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Désodorisation</li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Finition extérieure</li>
+      </ul>
+      <button class="choose-btn">Choisir cette formule</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="send-panel" id="sendPanel">
+  <div class="send-card">
+    <h3>Votre demande : <span class="picked" id="pickedName"></span></h3>
+    <p class="hint">Vérifiez le message ci-dessous, puis envoyez-le à santiaDetailing.</p>
+    <div class="msg-box" id="msgBox"></div>
+    <div class="send-actions">
+      <a class="primary" id="waLink" href="#" target="_top" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.67-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.486 2 2 6.486 2 12.004c0 1.877.522 3.71 1.51 5.31L2 22l4.828-1.485A9.96 9.96 0 0 0 12.004 22C17.522 22 22 17.522 22 12.004 22 6.486 17.522 2 12.004 2zm0 18.2a8.16 8.16 0 0 1-4.166-1.14l-.299-.177-3.111.957.99-3.026-.194-.31A8.15 8.15 0 0 1 3.8 12.004c0-4.53 3.674-8.204 8.204-8.204 4.529 0 8.204 3.674 8.204 8.204 0 4.529-3.675 8.196-8.204 8.196z"/></svg>
+        Envoyer sur WhatsApp
+      </a>
+      <button id="copyBtn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copier le message
+      </button>
+      <a id="igLink" href="https://www.instagram.com/santiadetailing?stkn=MWZ4anl5emdkY2VpYw%3D%3D&amp;utm_source=qr" target="_top" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+        Ouvrir Instagram
+      </a>
+    </div>
+    <p class="copied-note" id="copiedNote">Astuce : copiez le message, puis collez-le dans la conversation Instagram.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="brand">santiaDetailing</div>
+  <div>Lavage auto &amp; Detailing — Toul &amp; environs (Nancy et alentours)</div>
+</footer>
+
+<script>
+  var offers = document.querySelectorAll('.offer');
+  var panel = document.getElementById('sendPanel');
+  var pickedName = document.getElementById('pickedName');
+  var msgBox = document.getElementById('msgBox');
+  var waLink = document.getElementById('waLink');
+  var copyBtn = document.getElementById('copyBtn');
+  var copiedNote = document.getElementById('copiedNote');
+  var phone = '33611394496';
+  var currentMessage = '';
+
+  offers.forEach(function (offer) {
+    offer.querySelector('.choose-btn').addEventListener('click', function () {
+      offers.forEach(function (o) { o.classList.remove('selected'); });
+      offer.classList.add('selected');
+
+      var name = offer.getAttribute('data-name');
+      var price = offer.getAttribute('data-price');
+      currentMessage = "Bonjour, je suis intéressé(e) par la " + name + " à " + price + " €. Pouvez-vous me donner vos disponibilités ? Merci !";
+
+      pickedName.textContent = name + ' — ' + price + ' €';
+      msgBox.textContent = currentMessage;
+      waLink.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(currentMessage);
+      copiedNote.textContent = 'Astuce : copiez le message, puis collez-le dans la conversation Instagram.';
+
+      panel.classList.add('open');
+      setTimeout(function () {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 260);
+    });
+  });
+
+  function copyText(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  copyBtn.addEventListener('click', function () {
+    if (!currentMessage) return;
+    var ok = copyText(currentMessage);
+    if (!ok && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(currentMessage).then(function () {
+        copiedNote.textContent = 'Message copié — collez-le dans Instagram.';
+      }, function () {
+        copiedNote.textContent = 'Copie automatique indisponible : sélectionnez le texte ci-dessus manuellement.';
+      });
+    } else if (ok) {
+      copiedNote.textContent = 'Message copié — collez-le dans Instagram.';
+    } else {
+      copiedNote.textContent = 'Copie automatique indisponible : sélectionnez le texte ci-dessus manuellement.';
+    }
+  });
+</script>
+
+</body>
+</html>
